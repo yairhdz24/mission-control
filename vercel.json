@@ -1,0 +1,19 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/process-queue",
+      "schedule": "*/5 * * * *"
+    }
+  ],
+  "functions": {
+    "app/api/orchestrate/route.ts": {
+      "maxDuration": 120
+    },
+    "app/api/agents/execute/route.ts": {
+      "maxDuration": 120
+    },
+    "app/api/cron/process-queue/route.ts": {
+      "maxDuration": 120
+    }
+  }
+}
