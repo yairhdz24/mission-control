@@ -1,36 +1,45 @@
 'use client'
 
-import { Badge } from '@/components/ui/badge'
+import { usePathname } from 'next/navigation'
+import { Search, Bell, Cpu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Command } from 'lucide-react'
+import { Input } from '@/components/ui/input'
 
-interface TopbarProps {
-  onCommandOpen?: () => void
+const PAGE_TITLES: Record<string, string> = {
+  '/office': 'Oficina Virtual',
+  '/agents': 'Agentes',
+  '/tasks': 'Tareas',
+  '/logs': 'Actividad',
 }
 
-export function Topbar({ onCommandOpen }: TopbarProps) {
+export function Topbar() {
+  const pathname = usePathname()
+  const title = PAGE_TITLES[pathname] || 'Mission Control'
+
   return (
-    <header className="flex h-14 items-center justify-between border-b bg-card px-4">
+    <header className="flex h-12 items-center justify-between border-b border-border/50 px-4">
       <div className="flex items-center gap-3">
-        <h2 className="text-sm font-medium text-muted-foreground">
-          AI Team Status
-        </h2>
-        <Badge variant="outline" className="gap-1 text-xs">
-          <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-          5 agentes online
-        </Badge>
+        <h2 className="text-sm font-semibold">{title}</h2>
       </div>
 
       <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          className="gap-2 text-xs text-muted-foreground"
-          onClick={onCommandOpen}
-        >
-          <Command className="h-3 w-3" />
-          <span>Cmd + K</span>
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Buscar..."
+            className="h-8 w-48 pl-8 text-xs bg-foreground/[0.04] border-transparent focus:border-border"
+          />
+          <kbd className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground/50 font-mono">⌘K</kbd>
+        </div>
+
+        <Button variant="ghost" size="icon" className="h-8 w-8 relative">
+          <Bell className="h-3.5 w-3.5 text-muted-foreground" />
         </Button>
+
+        <div className="flex items-center gap-1.5 rounded-lg bg-foreground/[0.04] px-2.5 py-1.5">
+          <Cpu className="h-3 w-3 text-muted-foreground" />
+          <span className="text-[10px] text-muted-foreground font-medium">claude-opus-4</span>
+        </div>
       </div>
     </header>
   )
