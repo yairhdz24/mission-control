@@ -1,5 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin'
-import type { Message, MessageType } from '@/types/database'
+import type { Message } from '@/types/database'
+type MessageType = string
 
 function getSupabase() {
   return createAdminClient()
